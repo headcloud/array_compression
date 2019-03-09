@@ -67,7 +67,7 @@ class RangeNode {
         return _lowSubRange.attach(other);
       }
 
-      return false; // could attach other instead of existing low sub range
+      return false; // can not attach other instead of existing low sub range
     }
 
     if (_msbIndex - 1 > other.msbIndex) {
