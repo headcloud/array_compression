@@ -91,7 +91,7 @@ class RangeNode {
     _count++;
     if (_msbIndex != -1) {
       final bool isLowSubRange = rawValue == 0 || rawValue & (1 << _msbIndex) == 0;
-      final int subRangeValue = rawValue & (~(~0 << _msbIndex));
+      final int subRangeValue = isLowSubRange ? rawValue : rawValue & ~(1 << _msbIndex);
 
       final RangeNode subRangeNode = isLowSubRange ? _getLowSubRangeLazy() : _getHighSubRangeLazy();
 
