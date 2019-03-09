@@ -111,7 +111,7 @@ class RangeNode {
     }
 
     final bool searchLow = rawValue == 0 || rawValue & (1 << _msbIndex) == 0;
-    final int subRangeValue = rawValue & (~(~0 << _msbIndex));
+    final int subRangeValue = searchLow ? rawValue : rawValue & ~(1 << _msbIndex);
     final RangeNode subRange = searchLow ? _lowSubRange : _highSubRange;
 
     return subRange != null && subRange.hasValue(subRangeValue);
