@@ -184,7 +184,9 @@ class RangeNode {
     }
 
     if (isFull) {
+      if (_lowSubRange == null) _getLowSubRangeLazy();
       final int rangeMin = _lowSubRange.minValue + sum;
+      if (_highSubRange == null) _getHighSubRangeLazy();
       final int rangeMax = (1 << _msbIndex) + _highSubRange.maxValue + sum;
 
       if (prevRange.isDefined) {

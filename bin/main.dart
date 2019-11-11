@@ -1,16 +1,30 @@
 
+import 'dart:math';
+
 import 'package:array_compression/compressor.dart';
 import 'package:array_compression/range_node.dart';
+import './../test/random_generator.dart';
 
 List<int> _array = [3,2,8,17,18,13,12,20,0,5,21,16,4,10,22,19,11];
 
 main(List<String> arguments) {
-  final RangeNode collectedRanges = collectRanges(_array);
+  //_array = {...getRandomGenerator().getRandomNumbers(0, 50, 100)}.toList();
+  _array = Iterable.generate(100000, (i) => i).toList()..shuffle(new Random());
 
+  final Stopwatch sw = new Stopwatch()..start();
+  final RangeNode collectedRanges = collectRanges(_array);
+  sw.stop();
+
+  print('#Tree based compression in: ${sw.elapsed}');
   print(collectedRanges.stringify());
 
-  print('by Compressor');
-  print(new Compressor().compress(_array));
+  final Stopwatch sw2 = new Stopwatch()..start();
+  final Compressor arrCompressor = new Compressor();
+  arrCompressor.compress(_array);
+  sw2.stop();
+
+  print('#HashSet and ranges reordering based compression in: ${sw2.elapsed}');
+  print(arrCompressor.stringify());
 }
 
 RangeNode collectRanges(List<int> array) {

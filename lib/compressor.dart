@@ -8,7 +8,7 @@ class Compressor {
   RangeStarterManager _rsManager = new RangeStarterManager();
 
   //List<int> _array = [3,2,8,17,18,13,12,20,0,5,21,16,4,10,22,19,11];
-  String compress(List<int> rawArray) {
+  bool compress(List<int> rawArray) {
     for(int element in rawArray) {
       final List<int> adjacentRangeStarters = _rsManager.lookupNeighbours(element);
       final int leftRangeKey = adjacentRangeStarters[0];
@@ -38,6 +38,10 @@ class Compressor {
       }
     }
 
+    return _rangesMap.isNotEmpty;
+  }
+
+  String stringify() {
     final StringBuffer b = new StringBuffer();
     final List<int> rangeStarts = _rsManager.getOrderedStarters().toList(growable: false);
 
